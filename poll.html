@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Poll</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .poll-container { max-width: 400px; margin: auto; }
+        .poll-options { list-style: none; padding: 0; }
+        .poll-options li { margin: 10px 0; }
+        .chart-container { max-width: 500px; margin: auto; }
+    </style>
+</head>
+<body>
+    <h2>Which programming language do you prefer?</h2>
+    <div class="poll-container">
+        <ul class="poll-options">
+            <li><input type="radio" name="vote" value="JavaScript"> JavaScript</li>
+            <li><input type="radio" name="vote" value="Python"> Python</li>
+            <li><input type="radio" name="vote" value="Java"> Java</li>
+            <li><input type="radio" name="vote" value="C++"> C++</li>
+        </ul>
+        <button onclick="submitVote()">Vote</button>
+    </div>
+    
+    <h3>Poll Results</h3>
+    <div class="chart-container">
+        <canvas id="pollChart"></canvas>
+    </div>
+    
+    <script>
+        let votes = { "JavaScript": 0, "Python": 0, "Java": 0, "C++": 0 };
+        let chart;
+
+        function submitVote() {
+            const selected = document.querySelector('input[name="vote"]:checked');
+            if (!selected) { alert("Please select an option!"); return; }
+            
+            votes[selected.value]++;
+            updateChart();
+        }
+
+        function updateChart() {
+            if (!chart) {
+                const ctx = document.getElementById('pollChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(votes),
+                        datasets: [{
+                            label: 'Votes',
+                            data: Object.values(votes),
+                            backgroundColor: ['red', 'blue', 'green', 'purple']
+                        }]
+                    }
+                });
+            } else {
+                chart.data.datasets[0].data = Object.values(votes);
+                chart.update();
+            }
+        }
+    </script>
+</body>
+</html>

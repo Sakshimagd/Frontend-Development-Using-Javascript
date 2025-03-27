@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    }
+
+   .container {
+    width: 300px;
+    margin: 100px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    button{
+        background: #b4a0a0;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Temperature Converter</h2>
+        <input type="number" id="celsiusInput" placeholder="Enter Celsius">
+        <button onclick="convertTemperature()">Convert</button>
+        <p id="result"></p>
+    </div>
+    <script>
+        function convertTemperature() {
+    let celsius = document.getElementById("celsiusInput").value;
+    let resultText = document.getElementById("result");
+
+    if (celsius === "" || isNaN(celsius)) {
+        resultText.innerHTML = " Please enter a valid number.";
+        resultText.style.color = "red";
+        return;
+    }
+
+    let fahrenheit = (parseFloat(celsius) * 9/5) + 32;
+    resultText.innerHTML = `${celsius}°C = ${fahrenheit.toFixed(2)}°F`;
+    resultText.style.color = "green";
+}
+
+    </script>
+</body>
+</html>
